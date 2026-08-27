@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upper-Focus 5-Day Split</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEBE5;
+    --card:#F7F6F2;
+    --ink:#14181C;
+    --ink-soft:#5C6268;
+    --rule:#CFCCC3;
+    --cobalt:#1B3FD8;
+    --run:#C43222;
+    --radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.5;
+    padding:22px 16px 56px;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  /* ---------- masthead ---------- */
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  h1{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;text-transform:uppercase;
+    font-size:clamp(42px,13vw,76px);
+    line-height:.88;letter-spacing:-.01em;
+    margin:10px 0 6px;
+  }
+  h1 span{color:var(--cobalt)}
+  .dek{color:var(--ink-soft);font-size:14px;max-width:46ch}
+
+  /* ---------- week matrix (signature) ---------- */
+  .matrix{
+    margin:26px 0 8px;border-top:2px solid var(--ink);
+    border-bottom:2px solid var(--ink);padding:14px 0 12px;
+  }
+  .matrix h2{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+    margin-bottom:12px;
+  }
+  table{width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:11px}
+  th{font-weight:500;color:var(--ink-soft);text-align:center;padding:0 0 8px}
+  th:first-child{text-align:left;width:31%}
+  td{padding:5px 0;text-align:center;border-top:1px solid var(--rule)}
+  td:first-child{
+    text-align:left;font-family:'IBM Plex Sans',sans-serif;
+    font-size:12px;font-weight:500;letter-spacing:.02em;
+  }
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cobalt)}
+  .dot.run{background:var(--run)}
+  .dot.hollow{background:none;border:1.5px solid var(--cobalt)}
+  .legend{
+    margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.04em;color:var(--ink-soft);
+    display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+  }
+  .legend i{font-style:normal;display:inline-flex;align-items:center;gap:6px}
+
+  /* ---------- day cards ---------- */
+  .day{
+    background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);
+    margin-top:20px;overflow:hidden;
+  }
+  .day.rest{background:none;border-style:dashed}
+  .dayhead{
+    display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+    padding:14px 16px 12px;border-bottom:1px solid var(--rule);
+  }
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+    letter-spacing:.12em;text-transform:uppercase;
+    color:#fff;background:var(--ink);padding:3px 7px;border-radius:2px;
+  }
+  .rest .tag{background:var(--run)}
+  .dayhead h3{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;
+    font-size:26px;line-height:1;letter-spacing:.01em;
+  }
+  .meta{
+    margin-left:auto;font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.06em;color:var(--ink-soft);white-space:nowrap;
+  }
+  .focus{
+    padding:9px 16px;font-size:12.5px;color:var(--ink-soft);
+    border-bottom:1px solid var(--rule);background:rgba(27,63,216,.04);
+  }
+  .focus b{color:var(--cobalt);font-weight:600}
+
+  ol{list-style:none;counter-reset:lift}
+  li{
+    counter-increment:lift;display:flex;gap:12px;align-items:flex-start;
+    padding:11px 16px;border-bottom:1px solid var(--rule);
+  }
+  li:last-child{border-bottom:none}
+  li::before{
+    content:counter(lift,decimal-leading-zero);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cobalt);
+    padding-top:3px;min-width:18px;
+  }
+  .lift{flex:1;min-width:0}
+  .name{font-weight:500;line-height:1.3}
+  .kit{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-soft);margin-top:3px;
+  }
+  .kit .rest-note{color:var(--ink-soft);opacity:.75}
+  .load{
+    font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;
+    white-space:nowrap;padding-top:1px;
+  }
+  .ss{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--cobalt);margin-top:3px;
+  }
+  .optional .name{color:var(--ink-soft)}
+
+  /* ---------- notes ---------- */
+  .notes{margin-top:34px;border-top:2px solid var(--ink);padding-top:20px}
+  .note{margin-bottom:18px}
+  .note h4{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--cobalt);margin-bottom:5px;
+  }
+  .note p{font-size:14px;color:#2A2F34}
+  footer{
+    margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;
+  }
+
+  @media (min-width:640px){
+    body{padding:40px 32px 72px}
+    .notes{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+  }
+  @media print{
+    body{background:#fff}
+    .day{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Smith machine · Cable · Barbell · Dumbbell</p>
+  <h1>Upper<br><span>Focus</span></h1>
+  <p class="dek">Five lifting days, two 5K days. Every upper-body muscle trained twice a week, legs held to one session so your weekend runs stay fast.</p>
+
+  <section class="matrix">
+    <h2>Weekly coverage</h2>
+    <table>
+      <thead>
+        <tr><th>Muscle</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Chest</td><td><i class="dot"></i></td><td></td><td></td><td><i class="dot"></i></td><td></td><td></td><td></td></tr>
+        <tr><td>Back</td><td></td><td><i class="dot"></i></td><td></td><td></td><td><i class="dot"></i></td><td></td><td></td></tr>
+        <tr><td>Shoulders</td><td><i class="dot hollow"></i></td><td></td><td></td><td><i class="dot"></i></td><td><i class="dot hollow"></i></td><td></td><td></td></tr>
+        <tr><td>Triceps</td><td><i class="dot"></i></td><td></td><td></td><td><i class="dot"></i></td><td></td><td></td><td></td></tr>
+        <tr><td>Biceps</td><td></td><td><i class="dot"></i></td><td></td><td></td><td><i class="dot"></i></td><td></td><td></td></tr>
+        <tr><td>Legs</td><td></td><td></td><td><i class="dot"></i></td><td></td><td></td><td><i class="dot run"></i></td><td><i class="dot run"></i></td></tr>
+        <tr><td>Core</td><td></td><td></td><td><i class="dot"></i></td><td></td><td><i class="dot hollow"></i></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="legend">
+      <i><span class="dot"></span> Direct work</i>
+      <i><span class="dot hollow"></span> Secondary</i>
+      <i><span class="dot run"></span> 5K run</i>
+    </p>
+  </section>
+
+  <!-- DAY 1 -->
+  <article class="day">
+    <div class="dayhead">
+      <span class="tag">Mon</span>
+      <h3>Push A</h3>
+      <span class="meta">6 lifts · ~50 min</span>
+    </div>
+    <p class="focus"><b>Lead:</b> chest. Heaviest pressing day of the week.</p>
+    <ol>
+      <li><div class="lift"><div class="name">Smith Machine Bench Press</div><div class="kit">Smith machine · rest 2–3 min</div></div><div class="load">4×6–8</div></li>
+      <li><div class="lift"><div class="name">Dumbbell Incline Press</div><div class="kit">Dumbbell · rest 90s</div></div><div class="load">3×8–10</div></li>
+      <li><div class="lift"><div class="name">Cable Crossovers</div><div class="kit">Cable · rest 60s</div></div><div class="load">3×12–15</div></li>
+      <li><div class="lift"><div class="name">Smith Machine Overhead Press</div><div class="kit">Smith machine · rest 90s</div></div><div class="load">3×8–10</div></li>
+      <li><div class="lift"><div class="name">Cable Lateral Raises</div><div class="kit">Cable · rest 45s</div><span class="ss">Superset with 06</span></div><div class="load">3×12–15</div></li>
+      <li><div class="lift"><div class="name">Cable Tricep Pushdowns</div><div class="kit">Cable · rest 45s</div></div><div class="load">3×10–12</div></li>
+    </ol>
+  </article>
+
+  <!-- DAY 2 -->
+  <article class="day">
+    <div class="dayhead">
+      <span class="tag">Tue</span>
+      <h3>Pull A</h3>
+      <span class="meta">6 lifts · ~50 min</span>
+    </div>
+    <p class="focus"><b>Lead:</b> lat width. Vertical pulling first, arms last.</p>
+    <ol>
+      <li><div class="lift"><div class="name">Pull-Ups</div><div class="kit">Bar · rest 2 min · add weight once you hit 10 clean</div></div><div class="load">4×6–10</div></li>
+      <li><div class="lift"><div class="name">Seated Cable Rows</div><div class="kit">Cable · rest 90s</div></div><div class="load">4×8–10</div></li>
+      <li><div class="lift"><div class="name">Wide-Grip Lat Pulldowns</div><div class="kit">Lat machine · rest 60s</div></div><div class="load">3×10–12</div></li>
+      <li><div class="lift"><div class="name">Straight-Arm Cable Pulldowns</div><div class="kit">Cable · rest 45s</div></div><div class="load">3×12–15</div></li>
+      <li><div class="lift"><div class="name">Barbell Bicep Curls</div><div class="kit">Barbell · rest 60s</div><span class="ss">Superset with 06</span></div><div class="load">3×8–10</div></li>
+      <li><div class="lift"><div class="name">Cable Rope Hammer Curls</div><div class="kit">Cable · rest 45s</div></div><div class="load">3×12</div></li>
+    </ol>
+  </article>
+
+  <!-- DAY 3 -->
+  <article class="day">
+    <div class="dayhead">
+      <span class="tag">Wed</span>
+      <h3>Legs + Core</h3>
+      <span class="meta">7 lifts · ~45 min</span>
+    </div>
+    <p class="focus"><b>Lead:</b> quality over volume. Sits mid-week so legs are recovered by Saturday's run.</p>
+    <ol>
+      <li><div class="lift"><div class="name">Smith Machine Squats</div><div class="kit">Smith machine · rest 2 min</div></div><div class="load">3×8–10</div></li>
+      <li><div class="lift"><div class="name">Smith Machine Romanian Deadlifts</div><div class="kit">Smith machine · rest 90s</div></div><div class="load">3×10</div></li>
+      <li><div class="lift"><div class="name">Bulgarian Split Squats</div><div class="kit">Dumbbell · rest 60s · keep these light</div></div><div class="load">2×10/leg</div></li>
+      <li><div class="lift"><div class="name">Smith Machine Calf Raises</div><div class="kit">Smith machine · rest 45s</div></div><div class="load">3×15–20</div></li>
+      <li><div class="lift"><div class="name">Hanging Leg Raises</div><div class="kit">Pull-up bar · rest 45s</div></div><div class="load">3×12–15</div></li>
+      <li><div class="lift"><div class="name">Cable Woodchoppers</div><div class="kit">Cable · rest 45s</div></div><div class="load">3×12/side</div></li>
+      <li><div class="lift"><div class="name">Weighted Plank</div><div class="kit">Weight plate · rest 45s</div></div><div class="load">2×45–60s</div></li>
+    </ol>
+  </article>
+
+  <!-- DAY 4 -->
+  <article class="day">
+    <div class="dayhead">
+      <span class="tag">Thu</span>
+      <h3>Push B</h3>
+      <span class="meta">6 lifts · ~50 min</span>
+    </div>
+    <p class="focus"><b>Lead:</b> shoulders and upper chest. Same muscles as Monday, different angles and rep ranges.</p>
+    <ol>
+      <li><div class="lift"><div class="name">Smith Machine Incline Press</div><div class="kit">Smith machine · rest 2 min</div></div><div class="load">4×8–10</div></li>
+      <li><div class="lift"><div class="name">Dumbbell Arnold Press</div><div class="kit">Dumbbell · rest 90s</div></div><div class="load">3×8–10</div></li>
+      <li><div class="lift"><div class="name">Cable Lateral Raises</div><div class="kit">Cable · rest 45s · drop set on the last one</div></div><div class="load">4×12–15</div></li>
+      <li><div class="lift"><div class="name">Low-to-High Cable Flyes</div><div class="kit">Cable · rest 60s</div></div><div class="load">3×12–15</div></li>
+      <li><div class="lift"><div class="name">Barbell Skull Crushers</div><div class="kit">Barbell · rest 60s</div><span class="ss">Superset with 06</span></div><div class="load">3×8–10</div></li>
+      <li><div class="lift"><div class="name">Overhead Cable Tricep Extension</div><div class="kit">Cable · rest 45s</div></div><div class="load">3×12–15</div></li>
+    </ol>
+  </article>
+
+  <!-- DAY 5 -->
+  <article class="day">
+    <div class="dayhead">
+      <span class="tag">Fri</span>
+      <h3>Pull B</h3>
+      <span class="meta">6 lifts · ~50 min</span>
+    </div>
+    <p class="focus"><b>Lead:</b> back thickness and rear delts. No heavy deadlifts, so you go into Saturday's run fresh.</p>
+    <ol>
+      <li><div class="lift"><div class="name">Barbell Bent-Over Rows</div><div class="kit">Barbell · rest 2 min</div></div><div class="load">4×8–10</div></li>
+      <li><div class="lift"><div class="name">Close-Grip Lat Pulldowns</div><div class="kit">Lat machine · rest 90s</div></div><div class="load">3×10–12</div></li>
+      <li><div class="lift"><div class="name">Single-Arm Dumbbell Rows</div><div class="kit">Dumbbell · rest 60s</div></div><div class="load">3×10/arm</div></li>
+      <li><div class="lift"><div class="name">Cable Face Pulls</div><div class="kit">Cable · rest 45s</div></div><div class="load">3×15–20</div></li>
+      <li><div class="lift"><div class="name">Smith Machine Shrugs</div><div class="kit">Smith machine · rest 45s</div></div><div class="load">3×12–15</div></li>
+      <li><div class="lift"><div class="name">Incline Dumbbell Curls</div><div class="kit">Dumbbell · rest 45s</div><span class="ss">Superset with 07 if you have time</span></div><div class="load">3×10–12</div></li>
+      <li class="optional"><div class="lift"><div class="name">Cable Reverse Curls — optional</div><div class="kit">Cable · drop this first if you're short on time</div></div><div class="load">2×12–15</div></li>
+    </ol>
+  </article>
+
+  <!-- WEEKEND -->
+  <article class="day rest">
+    <div class="dayhead">
+      <span class="tag">Sat / Sun</span>
+      <h3>5K + Recovery</h3>
+      <span class="meta">Run days</span>
+    </div>
+    <p class="focus">Run Saturday easy, Sunday harder — or the reverse. Two days off lifting is what lets four upper-body sessions a week actually work.</p>
+  </article>
+
+  <section class="notes">
+    <div class="note">
+      <h4>What changed</h4>
+      <p>Your old plan hit chest, back and arms once a week each. This one hits them twice, which is where most of the growth comes from. Legs drop from two sessions to one, and Friday's barbell deadlifts are gone so they don't wreck your Saturday run.</p>
+    </div>
+    <div class="note">
+      <h4>Progressive overload</h4>
+      <p>When you hit the top of the rep range on every set, add 2.5–5 lbs next week. Log every set — the plan only works if the numbers move.</p>
+    </div>
+    <div class="note">
+      <h4>Keeping it under an hour</h4>
+      <p>Rest times are on each lift. Stick to them, use the supersets, and set up the second exercise before you start the first. If you're running long, cut the last isolation movement.</p>
+    </div>
+    <div class="note">
+      <h4>Effort</h4>
+      <p>Leave 1–2 reps in the tank on your first sets and take the last set of each isolation lift close to failure. Compounds don't need to be grinders every week.</p>
+    </div>
+    <div class="note">
+      <h4>Deload</h4>
+      <p>Every 7–8 weeks, cut your sets in half for one week and keep the weight the same. Your joints and your runs will both thank you.</p>
+    </div>
+    <div class="note">
+      <h4>Fuel</h4>
+      <p>0.8–1g of protein per lb of bodyweight. With 10 km of running on top of five lifting days, a slight surplus is what makes the difference between maintaining and growing.</p>
+    </div>
+  </section>
+
+  <footer>Push · Pull · Legs · Push · Pull · Run · Run</footer>
+</div>
+</body>
+</html>
